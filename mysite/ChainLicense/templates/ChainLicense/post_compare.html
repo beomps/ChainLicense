@@ -1,0 +1,23 @@
+{% load static %}
+<html>
+<head>
+        <title>Chain License Compare</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <div>
+            <h1><a href="/ChainLicense">Chain License</a></h1>
+    </div>
+    //아래 코드 수정하여 비교 로직 넣기
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                <a href="{% url 'post_new' %}" class="top-menu">Protect my works<span class="glyphicon glyphicon-plus"></span></a>//
+                <a href="{% url 'post_compare' %}" class="top-menu">Check your works<span class=""></span></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
