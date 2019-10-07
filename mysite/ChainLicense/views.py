@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from .models import Data
 from django.http import HttpResponse
 from .forms import PostForm
+from .forms import SearchForm
 from django.utils import timezone
 
 
@@ -27,6 +28,13 @@ def post_detail(request, seq):
     return render(request, 'ChainLicense/post_detail.html', {'data': data})
 
 def post_compare(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search = form.save(commit=False)
+            datas = Data.objects.filter(name=search.name, author=search.author)
+            return render(request, 'ChainLicense/post_list.html', {'datas': datas})
+
     form = PostForm()
     return render(request, 'ChainLicense/post_compare.html', {'form': form})
 

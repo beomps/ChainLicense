@@ -1,11 +1,16 @@
-<div>
-    <h1><a href="/">Chain License Lists</a></h1>
+{% load static %}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+         <link rel="stylesheet" href="{% static 'css/basic.css' %}">
+<div style="margin: 0 0 100 0;">
+    <h1><a href="/ChainLicense">Chain License Lists</a></h1>
 </div>
-
+<ul>
 {% for data in datas %}
     <div>
-        <p>published: {{ data.published_date }}</p>
-        <h1><a href="">{{ data.author }}</a></h1>
+        <h1><a href="{% url 'post_detail' seq=data.seq%}">{{ data.name }}</a></h1>
         <p>{{ data.text|linebreaksbr }}</p>
+        <p>published: {{ data.published_date }}</p>
     </div>
 {% endfor %}
+</ul>

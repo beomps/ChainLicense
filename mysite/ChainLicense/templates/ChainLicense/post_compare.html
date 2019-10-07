@@ -10,13 +10,32 @@
     <div>
             <h1><a href="/ChainLicense">Chain License</a></h1>
     </div>
-    //아래 코드 수정하여 비교 로직 넣기
+
     <div class="content container">
         <div class="row">
             <div class="col-md-8">
-                <a href="{% url 'post_new' %}" class="top-menu">Protect my works<span class="glyphicon glyphicon-plus"></span></a>//
-                <a href="{% url 'post_compare' %}" class="top-menu">Check your works<span class=""></span></a>
+                <a href="{% url 'post_new' %}">Protect my works<span class="glyphicon glyphicon-plus"></span></a>//
+                <a href="{% url 'post_compare' %}">Check your works<span class=""></span></a>
             </div>
+        </div>
+    </div>
+
+   <div id="content">
+        <h2>compare my idea to another ideas</h2>
+
+        <div style="padding:1em;">
+            <form method="post">
+                {% csrf_token %}
+                <label for="idea_name" style="padding-right:1em;">
+                    Idea Name :
+                    <input id="idea_name" type="text" name="name" value="">
+                </label>
+                <label for="idea_author" style="padding-right:1em;">
+                    Idea Creator :
+                    <input id="idea_author" type="text" name="author" value="{{username}}">
+                </label>
+                <input type="submit" value="Search">
+            </form>
         </div>
     </div>
 </body>

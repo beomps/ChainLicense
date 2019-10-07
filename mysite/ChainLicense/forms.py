@@ -9,3 +9,8 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Data
         fields = ('name', 'author','contents', 'published_date', 'etc',)
+
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model = Data
+        fields = ('name', 'author',)
