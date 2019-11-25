@@ -13,4 +13,4 @@ class PostForm(forms.ModelForm):
 class SearchForm(forms.ModelForm):
     class Meta:
         model = Data
-        fields = ('name', 'author',)
+        fields = ('contents', 'author',)

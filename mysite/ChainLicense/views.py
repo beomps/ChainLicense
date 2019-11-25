@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from .forms import PostForm
 from .forms import SearchForm
 from django.utils import timezone
-
+import requests
+import json
 
 def index(request):
     return render(request, 'ChainLicense/index.html')
@@ -14,9 +15,18 @@ def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
+            
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
+
+            headers = {
+                'Content-type': 'application/json',
+            }
+            data = {"data" : post.contents}
+            data = json.dumps(data)
+            response = requests.post('http://localhost:3001/mineBlock', headers=headers, data=data)
+            
             post.save()
             return redirect('post_detail', seq=post.seq)
     else:
@@ -28,11 +38,18 @@ def post_detail(request, seq):
     return render(request, 'ChainLicense/post_detail.html', {'data': data})
 
 def post_compare(request):
+    response = requests.get('http://localhost:3001/blocks')
+    for i in response:
+        print(str(i))
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
             search = form.save(commit=False)
-            datas = Data.objects.filter(name=search.name, author=search.author)
+            print(search.contents)
+            #for dic in ch_response:
+            #    print(dic.get('hash'))
+
+            datas = Data.objects.filter(name=search.contents, author=search.author)
             return render(request, 'ChainLicense/post_list.html', {'datas': datas})
 
     form = PostForm()
