@@ -9,10 +9,10 @@
 {% for data in datas %}
     <div>
         <h1><a href="{% url 'post_detail' seq=data.index%}">{{ data.index }}</a></h1>
-        <p>{{ data.data|linebreaksbr }}</p>
+        <b><p>{{ data.data|linebreaksbr }}</p></b>
         <p>previousHash: {{ data.previousHash }}</p>
-        <p>timestamp: {{ data.timestamp }}</p>
         <p>hash: {{ data.hash }}</p>
+        <p>timestamp: {{ data.timestamp }}</p>
     </div>
 {% endfor %}
 </ul>

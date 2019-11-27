@@ -18,8 +18,8 @@ def post_new(request):
         if form.is_valid():
             
             post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
+            #post.author = request.user
+            #post.published_date = timezone.now()
 
             headers = {
                 'Content-type': 'application/json',
@@ -28,25 +28,24 @@ def post_new(request):
             data = json.dumps(data)
             response = requests.post('http://localhost:3001/mineBlock', headers=headers, data=data)
             
-            post.save()
-            return redirect('post_detail', seq=post.seq)
+            return render(request, 'ChainLicense/post_result.html', {'result': 'Your works is now protected!!'})
     else:
         form = PostForm()
     return render(request, 'ChainLicense/post_edit.html', {'form': form})
 
-def post_detail(request, seq):
+def post_detail(request, index):
     #data = get_object_or_404(Data, seq=seq)
     response = requests.get('http://localhost:3001/blocks').json()
     for i in response:
-        if i.get('data') == seq:
+        if i.get('index') == index:
             data = i
         else:
-            data = "Not Found"
-    return render(request, 'ChainLicense/post_detail.html', {'data': data})
+            return render(request, 'ChainLicense/post_result.html', {'result': '0 result. This works is unprotected now'})
+    return render(request, 'ChainLicense/post_detail.html', {'datas': data})
 
 def post_compare(request):
     response = requests.get('http://localhost:3001/blocks').json()
-    
+    datas = []
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
@@ -54,18 +53,20 @@ def post_compare(request):
             print(search.contents)
             for i in response:
                 #print(i.get('data'))
+                if i.get('data') is None:
+                    continue
                 result_temp = KMPSearch(search.contents,i.get('data'))
                 if result_temp is not None:
                     print(i)
-                    return render(request, 'ChainLicense/post_list.html', i)
-
-            #datas = Data.objects.filter(name=search.contents, author=search.author)
-            #return render(request, 'ChainLicense/post_list.html', result_temp_lists)
-
+                    datas.append(i)
+        print(datas)
+        if not datas:
+            return render(request, 'ChainLicense/post_result.html', {'result': '0 result. This works is unprotected now'})
+        else:
+            return render(request, 'ChainLicense/post_detail.html', {'datas': datas})
     form = PostForm()
     return render(request, 'ChainLicense/post_compare.html', {'form': form})
 
 def post_list(request):
-    #datas = Data.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     response = requests.get('http://localhost:3001/blocks').json()
     return render(request, 'ChainLicense/post_list.html', {'datas': response})

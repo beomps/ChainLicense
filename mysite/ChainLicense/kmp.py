@@ -19,7 +19,7 @@ def KMPSearch(pat, txt):
             j += 1
 
         if j == M: 
-            print ("Found pattern at index"+str(i-j))
+            #print ("Found pattern at index"+str(i-j))
             
             #result_lists.append(txt)
             #print(result_lists)

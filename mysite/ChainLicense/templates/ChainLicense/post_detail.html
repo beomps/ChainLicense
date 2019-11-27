@@ -1,16 +1,19 @@
-{% extends 'ChainLicense/index.html' %}
-
-{% block content %}
-    <div style="margin: 1em 0;">
-
+{% load static %}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+         <link rel="stylesheet" href="{% static 'css/basic.css' %}">
+<div style="margin: 0 0 100 0;">
+    <h1><a href="/ChainLicense">Chain License Detail</a></h1>
+</div>
+<ul>
+{% for data in datas %}
+    <div>
+        <h1><b>Found Results</b></h1>
         <h1>{{ data.index }}</h1>
-
-        <strong>{{ data.hash|linebreaksbr }}</strong>
-        <p>{{ data.data|linebreaksbr }}</p>
-        {% if data.timestamp %}
-            <div class="date">
-                {{ data.timestamp }}
-            </div>
-        {% endif %}
+        <b><p>{{ data.data|linebreaksbr }}</p></b>
+        <p>previousHash: {{ data.previousHash }}</p>
+        <p>hash: {{ data.hash }}</p>
+        <p>timestamp: {{ data.timestamp }}</p>
     </div>
-{% endblock %}
+{% endfor %}
+</ul>
